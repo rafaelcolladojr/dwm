@@ -1,8 +1,6 @@
 *.orig
 *.rej
-patches
-util.o
-dwm
-dwm.o
-drw.o
+*.o
 *.diff
+patches
+dwm
