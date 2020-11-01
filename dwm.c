@@ -218,7 +218,8 @@ static void sendmon(Client *c, Monitor *m);
 static void setclientstate(Client *c, long state);
 static void setfocus(Client *c);
 static void setfullscreen(Client *c, int fullscreen);
-static void setgaps(int oh, int ov, int ih, int iv);
+static void _setgaps(int oh, int ov, int ih, int iv);
+static void setgaps(const Arg *arg);
 static void incrgaps(const Arg *arg);
 static void incrigaps(const Arg *arg);
 static void incrogaps(const Arg *arg);
@@ -1534,7 +1535,7 @@ setfullscreen(Client *c, int fullscreen)
 }
 
 void
-setgaps(int oh, int ov, int ih, int iv)
+_setgaps(int oh, int ov, int ih, int iv)
 {
 	if (oh < 0) oh = 0;
 	if (ov < 0) ov = 0;
@@ -1548,6 +1549,18 @@ setgaps(int oh, int ov, int ih, int iv)
 	arrange(selmon);
 }
 
+// For keybinding
+void
+setgaps(const Arg *arg)
+{
+	_setgaps(
+		arg->i,
+		arg->i,
+		arg->i,
+		arg->i
+		);
+}
+
 void
 togglegaps(const Arg *arg)
 {
@@ -1558,13 +1571,13 @@ togglegaps(const Arg *arg)
 void
 defaultgaps(const Arg *arg)
 {
-	setgaps(gappoh, gappov, gappih, gappiv);
+	_setgaps(gappoh, gappov, gappih, gappiv);
 }
 
 void
 incrgaps(const Arg *arg)
 {
-	setgaps(
+	_setgaps(
 		selmon->gappoh + arg->i,
 		selmon->gappov + arg->i,
 		selmon->gappih + arg->i,
@@ -1575,7 +1588,7 @@ incrgaps(const Arg *arg)
 void
 incrigaps(const Arg *arg)
 {
-	setgaps(
+	_setgaps(
 		selmon->gappoh,
 		selmon->gappov,
 		selmon->gappih + arg->i,
@@ -1586,7 +1599,7 @@ incrigaps(const Arg *arg)
 void
 incrogaps(const Arg *arg)
 {
-	setgaps(
+	_setgaps(
 		selmon->gappoh + arg->i,
 		selmon->gappov + arg->i,
 		selmon->gappih,
@@ -1597,7 +1610,7 @@ incrogaps(const Arg *arg)
 void
 incrohgaps(const Arg *arg)
 {
-	setgaps(
+	_setgaps(
 		selmon->gappoh + arg->i,
 		selmon->gappov,
 		selmon->gappih,
@@ -1608,7 +1621,7 @@ incrohgaps(const Arg *arg)
 void
 incrovgaps(const Arg *arg)
 {
-	setgaps(
+	_setgaps(
 		selmon->gappoh,
 		selmon->gappov + arg->i,
 		selmon->gappih,
@@ -1619,7 +1632,7 @@ incrovgaps(const Arg *arg)
 void
 incrihgaps(const Arg *arg)
 {
-	setgaps(
+	_setgaps(
 		selmon->gappoh,
 		selmon->gappov,
 		selmon->gappih + arg->i,
@@ -1630,7 +1643,7 @@ incrihgaps(const Arg *arg)
 void
 incrivgaps(const Arg *arg)
 {
-	setgaps(
+	_setgaps(
 		selmon->gappoh,
 		selmon->gappov,
 		selmon->gappih,
